@@ -14,14 +14,14 @@
  
         #password-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1a0101;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; transition: 0.8s;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000;
         }
         .pass-box { background: rgba(255, 77, 109, 0.1); padding: 25px; border-radius: 15px; text-align: center; backdrop-filter: blur(5px); border: 1px solid rgba(255, 77, 109, 0.3); width: 85%; max-width: 320px; }
         input { padding: 12px; border-radius: 8px; border: none; margin-bottom: 15px; width: 90%; text-align: center; font-size: 1.2rem; outline: none; background: #fff; color: #ff4d6d; }
         .pass-btn { background: #ff4d6d; color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-weight: bold; }
  
         #main-content { display: none; text-align: center; z-index: 10; width: 95%; max-width: 1000px; }
-        .container { background: rgba(255, 77, 109, 0.05); backdrop-filter: blur(10px); padding: 25px; border-radius: 20px; border: 1px solid rgba(255, 77, 109, 0.2); position: relative; transition: 1.5s; width: 90%; margin: auto; }
+        .container { background: rgba(255, 77, 109, 0.05); backdrop-filter: blur(10px); padding: 25px; border-radius: 20px; border: 1px solid rgba(255, 77, 109, 0.2); position: relative; width: 90%; margin: auto; }
  
         .photo-frame { width: 70vw; max-width: 300px; aspect-ratio: 1/1; margin: 0 auto 15px; position: relative; }
         .main-pic { width: 100%; height: 100%; border-radius: 20px; border: 3px solid #ff4d6d; object-fit: cover; box-shadow: 0 0 20px rgba(255, 77, 109, 0.5); }
@@ -88,7 +88,7 @@
         <div class="container" id="box">
             <div id="step1">
                 <div class="photo-frame"><img src="us.jpg" class="main-pic"></div>
-                <h1 style="color: #ff758f; font-size: 1.5rem;">For My Khushali ❤️</h1>
+                <h1 style="color: #ff758f; font-size: 1.5rem;">For My Khushi❤️</h1>
                 <p style="font-size: 0.95rem; color: #ffb3c1; padding: 0 5px;">You make my world brighter every single day, I'm lucky to have you. Thank you for coming into my life, You made my world bloomed!!!</p>
             </div>
  
@@ -121,51 +121,47 @@
         let starInterval;
         const heartColors = ['#ff4d6d', '#ff758f', '#c9184a', '#ffb3c1'];
  
+        // THE MOST STABLE UNLOCK LOGIC
         function checkPassword() {
-            const typed = document.getElementById('passInput').value;
-            if (typed === '1429') {
-                // FORCE TRANSITION REGARDLESS OF AUDIO STATUS
+            const pass = document.getElementById('passInput').value;
+            if (pass === '1429') {
+                // Remove password screen immediately
                 document.getElementById('password-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
                 
-                // Try audio in background without stopping execution
-                try {
+                // Start music after a tiny delay so it doesn't block the screen removal
+                setTimeout(() => {
                     const audio = document.getElementById('loveSong');
-                    audio.play().catch(() => console.log("Audio play deferred"));
-                } catch(e) {}
+                    audio.play().catch(e => console.log("Audio deferred"));
+                }, 100);
  
-                setInterval(() => createHeart('bg-heart'), 500);
+                // Start hearts and sequence
+                setInterval(() => createHeart('bg-heart'), 600);
                 runSequence();
+            } else {
+                alert("Incorrect Code!");
             }
         }
  
         function runSequence() {
             setTimeout(() => {
-                const s1 = document.getElementById('step1');
-                if(s1) s1.style.animation = "fadeOut 1s forwards";
-                setTimeout(() => {
-                    if(s1) s1.style.display = "none";
-                    document.getElementById('step2').style.display = "flex";
-                }, 1000);
+                document.getElementById('step1').style.display = "none";
+                document.getElementById('step2').style.display = "flex";
             }, 10000);
  
             setTimeout(() => {
-                document.getElementById('step2').style.animation = "fadeOut 1s forwards";
-                setTimeout(() => {
-                    document.getElementById('step2').style.display = "none";
-                    document.getElementById('box').style.opacity = "0";
-                    startFloating();
-                    startShootingStars();
-                }, 1000);
+                document.getElementById('step2').style.display = "none";
+                document.getElementById('box').style.opacity = "0";
+                startFloating();
+                startShootingStars();
             }, 22000);
  
             setTimeout(() => {
                 stopFloating();
                 clearInterval(starInterval);
+                document.getElementById('box').style.opacity = "1";
                 document.getElementById('box').style.background = "transparent";
                 document.getElementById('box').style.border = "none";
-                document.getElementById('box').style.boxShadow = "none";
-                document.getElementById('box').style.opacity = "1";
                 document.getElementById('step4').style.display = "block";
                 document.getElementById('final-btn').style.display = "inline-block";
             }, 35000);
@@ -179,18 +175,18 @@
                 star.style.left = Math.random() * 100 + 'vw';
                 document.body.appendChild(star);
                 setTimeout(() => star.remove(), 3000);
-            }, 1200);
+            }, 1500);
         }
  
         function startFloating() {
             const pics = ['f3', 'f4', 'f5', 'f6', 'f7'];
-            const positions = [{l:'2vw',t:'5vh'},{l:'70vw',t:'8vh'},{l:'4vw',t:'65vh'},{l:'72vw',t:'62vh'},{l:'35vw',t:'32vh'}];
+            const positions = [{l:'2%',t:'5%'},{l:'70%',t:'8%'},{l:'4%',t:'65%'},{l:'72%',t:'62%'},{l:'35%',t:'32%'}];
             pics.forEach((id, i) => {
                 const el = document.getElementById(id);
                 if(el) {
                     el.style.display = "block"; el.style.opacity = "1";
                     el.style.left = positions[i].l; el.style.top = positions[i].t;
-                    el.style.animation = `drift ${5 + i}s infinite alternate ease-in-out, fadeIn 1.5s`;
+                    el.style.animation = `drift ${5 + i}s infinite alternate ease-in-out`;
                 }
             });
         }
@@ -198,18 +194,15 @@
         function stopFloating() {
             ['f3', 'f4', 'f5', 'f6', 'f7'].forEach(id => {
                 const el = document.getElementById(id);
-                if(el) {
-                    el.style.animation = "fadeOut 1s forwards";
-                    setTimeout(() => el.style.display = "none", 1000);
-                }
+                if(el) el.style.display = "none";
             });
         }
  
         function celebrate() {
             document.getElementById('final-btn').style.display = 'none';
             document.getElementById('final-msg').style.display = 'block';
-            for(let i=0; i<80; i++) {
-                setTimeout(() => createHeart('explosion-heart'), i * 15);
+            for(let i=0; i<60; i++) {
+                setTimeout(() => createHeart('explosion-heart'), i * 20);
             }
         }
  
@@ -220,6 +213,14 @@
             heart.style.color = heartColors[Math.floor(Math.random() * heartColors.length)];
             heart.style.left = type === 'bg-heart' ? Math.random() * 100 + 'vw' : '50vw';
             heart.style.top = type === 'bg-heart' ? '' : '50vh';
-            heart.style.fontSize = Math.random() * 25 + 15 + 'px';
+            heart.style.fontSize = Math.random() * 20 + 15 + 'px';
             if(type === 'explosion-heart') {
-                heart.style.setProperty('--tx
+                heart.style.setProperty('--tx', (Math.random() - 0.5) * 500 + 'px');
+                heart.style.setProperty('--ty', (Math.random() - 0.5) * 500 + 'px');
+            }
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
+        }
+    </script>
+</body>
+</html>
