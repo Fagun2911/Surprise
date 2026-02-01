@@ -27,13 +27,14 @@
         .yes-btn { background: #ff4d6d; color: white; border: none; padding: 10px 30px; border-radius: 50px; cursor: pointer; font-weight: bold; }
         .no-btn { background: #555; color: white; border: none; padding: 10px 30px; border-radius: 50px; cursor: pointer; font-weight: bold; position: absolute; }
 
-        #step5 { display: none; align-items: center; justify-content: center; gap: 10px; padding-top: 20px; }
-        .card { width: 150px; height: 210px; position: relative; transform-style: preserve-3d; transition: transform 1.2s; }
+        /* Step 5: FIXED ALIGNMENT - Heart in center, us8 Most Left */
+        #step5 { display: none; align-items: center; justify-content: space-between; perspective: 1000px; padding: 20px 0; width: 100%; max-width: 600px; margin: 0 auto; }
+        .card { width: 140px; height: 190px; position: relative; transform-style: preserve-3d; transition: transform 1.2s; z-index: 2; }
         .flipped { transform: rotateY(180deg); }
         .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; border: 3px solid #ff4d6d; }
-        .card-back { background: #2b0303; transform: rotateY(180deg); display: flex; align-items: center; justify-content: center; padding: 10px; font-size: 0.75rem; color: #ffb3c1; text-align: center; border: 3px solid #ff758f; }
+        .card-back { background: #2b0303; transform: rotateY(180deg); display: flex; align-items: center; justify-content: center; padding: 10px; font-size: 0.7rem; color: #ffb3c1; text-align: center; border: 3px solid #ff758f; }
         
-        #heart-beat { font-size: 5rem; color: red; animation: pulse 0.8s infinite; z-index: 5; margin: 0 5px; }
+        #heart-beat { font-size: 4.5rem; color: red; animation: pulse 0.8s infinite; z-index: 10; flex-shrink: 0; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
 
         #final-popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 2.8rem; font-weight: bold; color: #ff4d6d; text-shadow: 0 0 20px white; z-index: 200; text-align: center; width: 100%; }
@@ -79,7 +80,7 @@
                 <button class="btn" id="p-click" style="background:#c9184a;" onclick="showP()">Please Click Me!!</button>
                 <div id="p-ui" style="display:none; margin-top:10px;">
                     <h2 style="color: #ff758f;">Happy Valentine's Day</h2>
-                    <p>I love you so much khushi ❤️<br>Will you be my valentine...????</p>
+                    <p>I Love You Soooooo Much Khushi❤️<br>Will you be my valentine...????</p>
                     <div class="proposal-btns">
                         <button class="yes-btn" onclick="goFinal()">Yes</button>
                         <button class="no-btn" id="noBtn" onmouseover="dodge()">No</button>
@@ -91,7 +92,8 @@
                     अब हर धड़कन कहती है — मैंने तुझसे सच्चा प्यार कर लिया।</div></div>
                 <div id="heart-beat">❤️</div>
                 <div class="card" id="cardR"><img src="us9.jpg" class="card-front"><div class="card-back">तेरी खूबसूरती का कोई पैमाना नहीं होता,
-                    तुझे देखूँ तो लगता है जैसे चाँद भी तेरे सामने फीका होता।</div></div>
+                    तुझे देखूँ तो लगता है जैसे चाँद भी तेरे सामने फीका होता।
+</div></div>
             </div>
         </div>
         <div id="float-wrap">
@@ -131,7 +133,7 @@
         function dodge() {
             const b = document.getElementById('noBtn');
             b.style.left = Math.random() * 70 + '%';
-            b.style.top = (Math.random() * 50 - 25) + 'px';
+            b.style.top = (Math.random() * 60 - 30) + 'px';
         }
 
         function goFinal() {
