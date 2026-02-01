@@ -37,20 +37,15 @@
         @keyframes heartBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
  
         #final-popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; font-weight: bold; color: #ff4d6d; text-shadow: 0 0 20px white; z-index: 200; text-align: center; width: 100%; }
-        
-        /* Explosion and Petal Effects */
         .rose { position: absolute; font-size: 25px; animation: fall 5s linear forwards; z-index: 150; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
         
-        .explosion-heart { position: absolute; font-size: 30px; z-index: 160; animation: explode 2s forwards; }
-        @keyframes explode {
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
-            100% { transform: translate(var(--tx), var(--ty)) scale(0.5); opacity: 0; }
-        }
- 
+        .explosion-heart { position: absolute; font-size: 30px; z-index: 160; animation: explode 2s forwards; pointer-events: none; }
+        @keyframes explode { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) scale(0.5); opacity: 0; } }
+        
+        .floating-mem { position: absolute; width: 20vw; max-width: 150px; aspect-ratio: 1/1; border-radius: 15px; border: 3px solid #ff758f; opacity: 0; object-fit: cover; pointer-events: none; }
         .bg-heart { position: absolute; z-index: -1; animation: float 7s linear infinite; pointer-events: none; }
         @keyframes float { 0% { transform: translateY(110vh); opacity: 1; } 100% { transform: translateY(-20vh); opacity: 0; } }
-        .floating-mem { position: absolute; width: 20vw; max-width: 150px; aspect-ratio: 1/1; border-radius: 15px; border: 3px solid #ff758f; opacity: 0; object-fit: cover; pointer-events: none; }
     </style>
 </head>
 <body>
@@ -70,10 +65,9 @@
         <div class="container" id="box">
             <div id="step1">
                 <div class="photo-frame"><img src="us.jpg" class="main-pic"></div>
-                <h1 style="color: #ff758f;">For My Khushali ❤️</h1>
+                <h1 style="color: #ff758f;">For My Khushi❤️</h1>
                 <p>You make my world brighter every single day, I am lucky to have you. Thank you for coming into my life, You made my world bloomed</p>
             </div>
- 
             <div id="step2">
                 <img src="us2.jpg" class="step2-pic">
                 <div id="shayari-text">तेरे आने से मेरी ज़िंदगी को नया मुकाम मिल गया,
@@ -81,41 +75,44 @@
                     पहले हर दिन बस यूँ ही गुजर जाता था,
                     अब हर पल में तेरा ही नाम मिल गया।</div>
             </div>
- 
             <div id="step4">
                 <button class="btn" style="background:#c9184a;" onclick="showProposal()">Please Click Me!!</button>
                 <div id="proposal-ui" style="display:none; margin-top:10px;">
                     <h2 style="color: #ff758f;">Happy Valentine's Day</h2>
-                    <p>I love you so much khushi ❤️<br>Will you be my valentine...????</p>
+                    <p>I love you so much khushi ❤️<br>Will you be my Valentine...????</p>
                     <div class="proposal-btns">
                         <button class="yes-btn" onclick="startFinal()">Yes</button>
                         <button class="no-btn" id="noBtn" onmouseover="dodge()">No</button>
                     </div>
                 </div>
             </div>
- 
             <div id="step5">
                 <div class="card" id="cardL"><img src="us9.jpg" class="card-front"><div class="card-back">teri khoobsurati ka koi paimana nahi hota, tuje dekhu to lagta he jese chand bhi tere samne fika hota.</div></div>
                 <div id="heart-beat">❤️</div>
                 <div class="card" id="cardR"><img src="us8.jpg" class="card-front"><div class="card-back">teri muskan ne dil me esa ujala kar dia, ab har dhadkan kahti he -- mene tujse sacha pyar kar liya</div></div>
             </div>
         </div>
- 
-        <div id="floating-wrap">
+        <div id="float-wrap">
             <img src="us3.jpg" class="floating-mem" id="f3"><img src="us4.jpg" class="floating-mem" id="f4"><img src="us5.jpg" class="floating-mem" id="f5"><img src="us6.jpg" class="floating-mem" id="f6"><img src="us7.jpg" class="floating-mem" id="f7">
         </div>
     </div>
  
-    <div id="final-popup">I Love You Khushi ❤️</div>
+    <div id="final-popup">I Love You Khushi❤️</div>
  
     <script>
         function checkPass() {
             if (document.getElementById('passInput').value === '1429') {
+                // Hard reset of the view to prevent tablet "freezing"
                 document.getElementById('password-screen').style.display = 'none';
-                document.getElementById('main-content').style.display = 'block';
-                document.getElementById('loveSong').play().catch(()=>{});
-                setInterval(spawnH, 600);
-                startSequence();
+                
+                // Wait 100ms for browser to clear memory before starting main content
+                setTimeout(() => {
+                    document.getElementById('main-content').style.display = 'block';
+                    const audio = document.getElementById('loveSong');
+                    audio.play().catch(()=>{});
+                    setInterval(spawnBgHeart, 600);
+                    startSequence();
+                }, 100);
             }
         }
  
@@ -140,35 +137,24 @@
         function startFinal() {
             document.getElementById('proposal-ui').style.display = "none";
             document.getElementById('step5').style.display = "flex";
-            
             setTimeout(() => {
                 document.getElementById('cardL').classList.add('flipped');
                 document.getElementById('cardR').classList.add('flipped');
-                
                 setTimeout(() => {
                     document.getElementById('box').style.display = "none";
                     document.getElementById('final-popup').style.display = "block";
-                    
-                    // Trigger Heart Explosion
-                    for(let i=0; i<60; i++) {
-                        setTimeout(createExplosionHeart, i * 20);
-                    }
+                    for(let i=0; i<60; i++) setTimeout(spawnExplosion, i * 20);
                     setInterval(dropRose, 150);
                 }, 8000);
             }, 5000);
         }
  
-        function createExplosionHeart() {
-            const h = document.createElement('div');
-            h.className = 'explosion-heart';
-            h.innerHTML = '❤️';
-            h.style.left = '50vw';
-            h.style.top = '50vh';
-            h.style.color = ['#ff4d6d', '#ff758f', '#ffb3c1'][Math.floor(Math.random()*3)];
+        function spawnExplosion() {
+            const h = document.createElement('div'); h.className = 'explosion-heart'; h.innerHTML = '❤️';
+            h.style.left = '50vw'; h.style.top = '50vh';
             h.style.setProperty('--tx', (Math.random() - 0.5) * 1000 + 'px');
             h.style.setProperty('--ty', (Math.random() - 0.5) * 1000 + 'px');
-            document.body.appendChild(h);
-            setTimeout(() => h.remove(), 2000);
+            document.body.appendChild(h); setTimeout(() => h.remove(), 2000);
         }
  
         function dropRose() {
@@ -185,4 +171,4 @@
             });
         }
  
-        function stopFloat() { ['f3','f4','f5','
+        function stopFloat() { ['f3','f4','f5','f6','f7'].forEach(id => document.getElementById(id).style.dis
