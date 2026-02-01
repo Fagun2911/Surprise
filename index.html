@@ -95,13 +95,16 @@
         }
  
         .profile-pic {
-            width: 130px;
+            width: 130px; 
             height: 130px;
             border-radius: 50%;
             border: 3px solid #ff4d6d;
             object-fit: cover;
             box-shadow: 0 0 15px rgba(255, 77, 109, 0.5);
         }
+ 
+        /* Second photo hidden initially */
+        #pic2 { display: none; animation: fadeIn 3s; }
  
         h1 { color: #ff4d6d; margin-bottom: 10px; font-size: 1.8rem; }
         
@@ -119,12 +122,7 @@
         }
  
         /* Decorations */
-        .heart, .star {
-            position: absolute;
-            user-select: none;
-            z-index: -1;
-        }
- 
+        .heart, .star { position: absolute; user-select: none; z-index: -1; }
         .heart { color: rgba(255, 77, 109, 0.4); animation: floatUp 6s linear infinite; }
         .star { background: white; border-radius: 50%; animation: twinkle 3s infinite ease-in-out; }
  
@@ -152,7 +150,7 @@
             <input type="password" id="passInput" placeholder="Password...">
             <br>
             <button class="pass-btn" onclick="checkPassword()">Unlock</button>
-            <p id="error" style="color: #ff4d6d; display: none; margin-top: 10px; font-size: 0.9rem;">Incorrect Code! Try again.</p>
+            <p id="error" style="color: #ff4d6d; display: none; margin-top: 10px; font-size: 0.9rem;">Incorrect Code!</p>
         </div>
     </div>
  
@@ -160,10 +158,10 @@
         <div class="container">
             <div class="photo-wrap">
                 <img src="us.jpg" alt="Memory 1" class="profile-pic">
-                <img src="us2.jpg" alt="Memory 2" class="profile-pic">
+                <img src="us2.jpg" id="pic2" alt="Memory 2" class="profile-pic">
             </div>
             <h1>For My Khushali ❤️</h1>
-            <p>You make my world brighter every single day. From our treks to the quiet star-gazing nights, I'm lucky to have you.</p>
+            <p id="initial-msg">You make my world brighter every single das, I'm lucky to have you.</p>
             
             <div id="shayari-message">
                 तेरे आने से मेरी ज़िंदगी को नया मुकाम मिल गया,
@@ -181,19 +179,20 @@
             const pass = document.getElementById('passInput').value;
             const audio = document.getElementById('loveSong');
  
-            if (pass === 'Fagun@1429') {
+            if (pass === '1429') {
                 document.getElementById('password-screen').style.opacity = '0';
                 setTimeout(() => {
                     document.getElementById('password-screen').style.display = 'none';
                     document.getElementById('main-content').style.display = 'block';
                     
-                    audio.play().catch(e => console.log("Audio failed"));
+                    audio.play().catch(e => console.log("Audio play blocked by browser."));
                     
                     setInterval(createHeart, 400);
                     createStars();
  
-                    // Show Shayari after 15 seconds
+                    // Sequence: After 15 seconds, show second photo and Shayari
                     setTimeout(() => {
+                        document.getElementById('pic2').style.display = 'block';
                         document.getElementById('shayari-message').style.display = 'block';
                     }, 15000);
                     
@@ -229,3 +228,4 @@
     </script>
 </body>
 </html>
+ 
