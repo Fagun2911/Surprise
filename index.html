@@ -26,22 +26,31 @@
         .yes-btn { background: #ff4d6d; color: white; border: none; padding: 10px 30px; border-radius: 50px; cursor: pointer; font-weight: bold; }
         .no-btn { background: #555; color: white; border: none; padding: 10px 30px; border-radius: 50px; cursor: pointer; font-weight: bold; position: absolute; transition: 0.1s; }
  
-        /* Step 5: Large Cards & Centered Beating Heart */
         #step5 { display: none; align-items: center; justify-content: center; perspective: 1000px; padding-top: 20px; gap: 10px; }
         .card { width: 150px; height: 210px; position: relative; transform-style: preserve-3d; transition: transform 1.2s; }
         .flipped { transform: rotateY(180deg); }
         .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; border: 3px solid #ff4d6d; }
-        .card-back { background: #2b0303; transform: rotateY(180deg); display: flex; align-items: center; justify-content: center; padding: 10px; font-size: 0.85rem; color: #ffb3c1; text-align: center; }
-        #heart-beat { font-size: 5rem; color: red; animation: pulse 0.8s infinite; z-index: 5; margin: 0 5px; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
+        .card-front { object-fit: cover; }
+        .card-back { background: #2b0303; transform: rotateY(180deg); display: flex; align-items: center; justify-content: center; padding: 10px; font-size: 0.75rem; color: #ffb3c1; text-align: center; border: 3px solid #ff758f; }
+        
+        #heart-beat { font-size: 5rem; color: red; animation: heartBeat 0.8s infinite; z-index: 5; margin: 0 5px; }
+        @keyframes heartBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
  
         #final-popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; font-weight: bold; color: #ff4d6d; text-shadow: 0 0 20px white; z-index: 200; text-align: center; width: 100%; }
+        
+        /* Explosion and Petal Effects */
         .rose { position: absolute; font-size: 25px; animation: fall 5s linear forwards; z-index: 150; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+        
+        .explosion-heart { position: absolute; font-size: 30px; z-index: 160; animation: explode 2s forwards; }
+        @keyframes explode {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0.5); opacity: 0; }
+        }
  
-        .floating-mem { position: absolute; width: 20vw; max-width: 150px; aspect-ratio: 1/1; border-radius: 15px; border: 3px solid #ff758f; opacity: 0; object-fit: cover; pointer-events: none; }
         .bg-heart { position: absolute; z-index: -1; animation: float 7s linear infinite; pointer-events: none; }
         @keyframes float { 0% { transform: translateY(110vh); opacity: 1; } 100% { transform: translateY(-20vh); opacity: 0; } }
+        .floating-mem { position: absolute; width: 20vw; max-width: 150px; aspect-ratio: 1/1; border-radius: 15px; border: 3px solid #ff758f; opacity: 0; object-fit: cover; pointer-events: none; }
     </style>
 </head>
 <body>
@@ -139,9 +148,27 @@
                 setTimeout(() => {
                     document.getElementById('box').style.display = "none";
                     document.getElementById('final-popup').style.display = "block";
+                    
+                    // Trigger Heart Explosion
+                    for(let i=0; i<60; i++) {
+                        setTimeout(createExplosionHeart, i * 20);
+                    }
                     setInterval(dropRose, 150);
                 }, 8000);
             }, 5000);
+        }
+ 
+        function createExplosionHeart() {
+            const h = document.createElement('div');
+            h.className = 'explosion-heart';
+            h.innerHTML = '❤️';
+            h.style.left = '50vw';
+            h.style.top = '50vh';
+            h.style.color = ['#ff4d6d', '#ff758f', '#ffb3c1'][Math.floor(Math.random()*3)];
+            h.style.setProperty('--tx', (Math.random() - 0.5) * 1000 + 'px');
+            h.style.setProperty('--ty', (Math.random() - 0.5) * 1000 + 'px');
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 2000);
         }
  
         function dropRose() {
@@ -158,13 +185,4 @@
             });
         }
  
-        function stopFloat() { ['f3','f4','f5','f6','f7'].forEach(id => document.getElementById(id).style.display = "none"); }
-        
-        function spawnH() {
-            const h = document.createElement('div'); h.className = 'bg-heart'; h.innerHTML = '❤️';
-            h.style.left = Math.random() * 100 + 'vw'; h.style.color = '#ff758f';
-            document.body.appendChild(h); setTimeout(() => h.remove(), 7000);
-        }
-    </script>
-</body>
-</html>
+        function stopFloat() { ['f3','f4','f5','
