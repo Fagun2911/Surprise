@@ -16,34 +16,44 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1a0101;
             display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; transition: 0.8s;
         }
-        .pass-box { background: rgba(255, 77, 109, 0.1); padding: 30px; border-radius: 15px; text-align: center; backdrop-filter: blur(5px); border: 1px solid rgba(255, 77, 109, 0.3); }
-        input { padding: 12px; border-radius: 8px; border: none; margin-bottom: 15px; width: 220px; text-align: center; font-size: 1.2rem; outline: none; background: #fff; color: #ff4d6d; }
-        .pass-btn { background: #ff4d6d; color: white; border: none; padding: 10px 25px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .pass-box { background: rgba(255, 77, 109, 0.1); padding: 25px; border-radius: 15px; text-align: center; backdrop-filter: blur(5px); border: 1px solid rgba(255, 77, 109, 0.3); width: 85%; max-width: 320px; }
+        input { padding: 12px; border-radius: 8px; border: none; margin-bottom: 15px; width: 90%; text-align: center; font-size: 1.2rem; outline: none; background: #fff; color: #ff4d6d; }
+        .pass-btn { background: #ff4d6d; color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-weight: bold; }
  
-        #main-content { display: none; text-align: center; z-index: 10; width: 95%; max-width: 900px; }
-        .container { background: rgba(255, 77, 109, 0.05); backdrop-filter: blur(10px); padding: 40px; border-radius: 20px; border: 1px solid rgba(255, 77, 109, 0.2); position: relative; transition: 1.5s; }
+        #main-content { display: none; text-align: center; z-index: 10; width: 95%; max-width: 1000px; }
+        .container { background: rgba(255, 77, 109, 0.05); backdrop-filter: blur(10px); padding: 25px; border-radius: 20px; border: 1px solid rgba(255, 77, 109, 0.2); position: relative; transition: 1.5s; width: 90%; margin: auto; }
  
-        .photo-frame { width: 320px; height: 320px; margin: 0 auto 20px; position: relative; }
-        .main-pic { width: 100%; height: 100%; border-radius: 25px; border: 4px solid #ff4d6d; object-fit: cover; box-shadow: 0 0 25px rgba(255, 77, 109, 0.6); }
+        .photo-frame { width: 70vw; max-width: 300px; aspect-ratio: 1/1; margin: 0 auto 15px; position: relative; }
+        .main-pic { width: 100%; height: 100%; border-radius: 20px; border: 3px solid #ff4d6d; object-fit: cover; box-shadow: 0 0 20px rgba(255, 77, 109, 0.5); }
  
-        #step2 { display: none; align-items: center; justify-content: center; gap: 40px; text-align: left; }
-        .split-left { flex: 1; display: flex; justify-content: flex-end; }
-        .split-right { flex: 1; }
+        #step2 { display: none; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
+        
+        @media (min-width: 768px) {
+            #step2 { flex-direction: row; text-align: left; gap: 40px; }
+            .container { padding: 45px; }
+            .photo-frame { max-width: 320px; }
+        }
  
-        .floating-mem { position: absolute; width: 220px; height: 220px; border-radius: 25px; border: 4px solid #ff758f; object-fit: cover; opacity: 0; z-index: 5; box-shadow: 0 0 20px rgba(255, 77, 109, 0.5); pointer-events: none; }
+        /* Adjusted Floating Memories for Tablet */
+        .floating-mem { position: absolute; width: 22vw; max-width: 160px; aspect-ratio: 1/1; border-radius: 15px; border: 3px solid #ff758f; object-fit: cover; opacity: 0; z-index: 5; box-shadow: 0 0 15px rgba(255, 77, 109, 0.4); pointer-events: none; }
  
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
         @keyframes drift {
             0% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(40px, -50px) rotate(10deg); }
-            100% { transform: translate(-30px, 30px) rotate(-10deg); }
+            100% { transform: translate(15px, -15px) rotate(4deg); }
         }
  
-        #final-btn { display: none; background: #c9184a; color: white; border: none; padding: 20px 50px; border-radius: 50px; font-size: 1.8rem; font-weight: bold; cursor: pointer; box-shadow: 0 0 30px #ff4d6d; z-index: 20; position: relative; }
+        #final-btn { display: none; background: #c9184a; color: white; border: none; padding: 18px 45px; border-radius: 50px; font-size: 1.4rem; font-weight: bold; cursor: pointer; box-shadow: 0 0 25px #ff4d6d; z-index: 20; position: relative; }
         
-        #shayari { white-space: pre-line; color: #ffb3c1; line-height: 2.2; font-size: 1.3rem; font-weight: 500; }
-        #final-msg { display: none; font-size: 2.5rem; color: #ff758f; margin-top: 20px; text-shadow: 0 0 15px white; animation: fadeIn 2s; }
+        #shayari { white-space: pre-line; color: #ffb3c1; line-height: 1.8; font-size: 1rem; font-weight: 500; }
+        #final-msg { display: none; font-size: 1.8rem; color: #ff758f; margin-top: 20px; text-shadow: 0 0 10px white; animation: fadeIn 2s; }
+ 
+        @media (min-width: 768px) {
+            #shayari { font-size: 1.2rem; line-height: 2; }
+            #final-msg { font-size: 2.5rem; }
+            #final-btn { font-size: 1.8rem; }
+        }
  
         .heart { position: absolute; user-select: none; z-index: -1; pointer-events: none; }
         .bg-heart { animation: floatUp 7s linear infinite; }
@@ -58,8 +68,7 @@
  
         @keyframes shoot {
             0% { transform: translateX(0) translateY(0) rotate(215deg); width: 0; opacity: 1; }
-            30% { width: 150px; opacity: 1; }
-            100% { transform: translateX(-800px) translateY(800px) rotate(215deg); width: 0; opacity: 0; }
+            100% { transform: translateX(-500px) translateY(500px) rotate(215deg); width: 0; opacity: 0; }
         }
  
         @keyframes floatUp { 0% { transform: translateY(110vh); opacity: 1; } 100% { transform: translateY(-20vh); opacity: 0; } }
@@ -86,18 +95,18 @@
         <div class="container" id="box">
             <div id="step1">
                 <div class="photo-frame"><img src="us.jpg" class="main-pic"></div>
-                <h1 style="color: #ff758f;">For My Khushi❤️</h1>
-                <p style="font-size: 1.2rem; color: #ffb3c1;">You make my world brighter every single day, I'm lucky to have you. Thank you for coming into my life, You made my world bloomed!!!</p>
+                <h1 style="color: #ff758f; font-size: 1.5rem;">For My Khushi❤️</h1>
+                <p style="font-size: 0.95rem; color: #ffb3c1; padding: 0 5px;">You make my world brighter every single day, I'm lucky to have you. Thank you for coming into my life, You made my world bloomed!!!</p>
             </div>
  
             <div id="step2">
-                <div class="split-left"><div class="photo-frame" style="margin: 0;"><img src="us2.jpg" class="main-pic"></div></div>
-                <div class="split-right"><div id="shayari">
+                <div class="photo-frame" style="margin-bottom: 5px;"><img src="us2.jpg" class="main-pic"></div>
+                <div id="shayari">
                     तेरे आने से मेरी ज़िंदगी को नया मुकाम मिल गया,
                     सूने रास्तों पर जैसे खुशियों का पैगाम मिल गया।
                     पहले हर दिन बस यूँ ही गुजर जाता था,
                     अब हर पल में तेरा ही नाम मिल गया।
-                </div></div>
+                </div>
             </div>
  
             <div id="step4" style="display:none;">
@@ -123,34 +132,31 @@
             if (document.getElementById('passInput').value === '1429') {
                 document.getElementById('password-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
-                
                 const audio = document.getElementById('loveSong');
-                // We wrap the audio in a "try/catch" so the site doesn't crash if it's blocked
-                audio.play().catch(e => console.log("Audio blocked. Playing silently."));
- 
-                setInterval(() => createHeart('bg-heart'), 400);
+                audio.play().catch(e => console.log("Audio blocked"));
+                setInterval(() => createHeart('bg-heart'), 500);
                 runSequence();
             }
         }
  
         function runSequence() {
             setTimeout(() => {
-                document.getElementById('step1').style.animation = "fadeOut 1.5s forwards";
+                document.getElementById('step1').style.animation = "fadeOut 1s forwards";
                 setTimeout(() => {
                     document.getElementById('step1').style.display = "none";
                     document.getElementById('step2').style.display = "flex";
-                }, 1500);
-            }, 12000);
+                }, 1000);
+            }, 10000);
  
             setTimeout(() => {
-                document.getElementById('step2').style.animation = "fadeOut 1.5s forwards";
+                document.getElementById('step2').style.animation = "fadeOut 1s forwards";
                 setTimeout(() => {
                     document.getElementById('step2').style.display = "none";
                     document.getElementById('box').style.opacity = "0";
                     startFloating();
                     startShootingStars();
-                }, 1500);
-            }, 25000);
+                }, 1000);
+            }, 22000);
  
             setTimeout(() => {
                 stopFloating();
@@ -161,28 +167,28 @@
                 document.getElementById('box').style.opacity = "1";
                 document.getElementById('step4').style.display = "block";
                 document.getElementById('final-btn').style.display = "inline-block";
-            }, 40000);
+            }, 35000);
         }
  
         function startShootingStars() {
             starInterval = setInterval(() => {
                 const star = document.createElement('div');
                 star.className = 'shooting-star';
-                star.style.top = Math.random() * 50 + 'vh';
+                star.style.top = Math.random() * 40 + 'vh';
                 star.style.left = Math.random() * 100 + 'vw';
                 document.body.appendChild(star);
                 setTimeout(() => star.remove(), 3000);
-            }, 800);
+            }, 1200);
         }
  
         function startFloating() {
             const pics = ['f3', 'f4', 'f5', 'f6', 'f7'];
-            const positions = [{l:'5vw',t:'5vh'},{l:'65vw',t:'5vh'},{l:'5vw',t:'55vh'},{l:'65vw',t:'55vh'},{l:'35vw',t:'30vh'}];
+            const positions = [{l:'2vw',t:'5vh'},{l:'70vw',t:'8vh'},{l:'4vw',t:'65vh'},{l:'72vw',t:'62vh'},{l:'35vw',t:'32vh'}];
             pics.forEach((id, i) => {
                 const el = document.getElementById(id);
                 el.style.display = "block"; el.style.opacity = "1";
                 el.style.left = positions[i].l; el.style.top = positions[i].t;
-                el.style.animation = `drift ${7 + i}s infinite alternate ease-in-out, fadeIn 2s`;
+                el.style.animation = `drift ${5 + i}s infinite alternate ease-in-out, fadeIn 1.5s`;
             });
         }
  
@@ -196,7 +202,7 @@
         function celebrate() {
             document.getElementById('final-btn').style.display = 'none';
             document.getElementById('final-msg').style.display = 'block';
-            for(let i=0; i<120; i++) {
+            for(let i=0; i<80; i++) {
                 setTimeout(() => createHeart('explosion-heart'), i * 15);
             }
         }
@@ -208,14 +214,10 @@
             heart.style.color = heartColors[Math.floor(Math.random() * heartColors.length)];
             heart.style.left = type === 'bg-heart' ? Math.random() * 100 + 'vw' : '50vw';
             heart.style.top = type === 'bg-heart' ? '' : '50vh';
-            heart.style.fontSize = Math.random() * 40 + 20 + 'px';
+            heart.style.fontSize = Math.random() * 25 + 15 + 'px';
             if(type === 'explosion-heart') {
-                heart.style.setProperty('--tx', (Math.random() - 0.5) * 1200 + 'px');
-                heart.style.setProperty('--ty', (Math.random() - 0.5) * 1200 + 'px');
+                heart.style.setProperty('--tx', (Math.random() - 0.5) * 600 + 'px');
+                heart.style.setProperty('--ty', (Math.random() - 0.5) * 600 + 'px');
             }
             document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), type === 'bg-heart' ? 7000 : 2000);
-        }
-    </script>
-</body>
-</html>
+            setTimeout(() => heart.remove(), type === 'bg-he
