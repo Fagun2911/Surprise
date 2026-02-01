@@ -121,22 +121,19 @@
  
         function checkPassword() {
             if (document.getElementById('passInput').value === '1429') {
-                // Remove password screen immediately
                 document.getElementById('password-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
                 
-                // Attempt to play audio
                 const audio = document.getElementById('loveSong');
-                audio.play().catch(e => console.log("Audio play blocked by browser. Interaction required."));
+                // We wrap the audio in a "try/catch" so the site doesn't crash if it's blocked
+                audio.play().catch(e => console.log("Audio blocked. Playing silently."));
  
-                // Start background animations
                 setInterval(() => createHeart('bg-heart'), 400);
                 runSequence();
             }
         }
  
         function runSequence() {
-            // First transition after 12s
             setTimeout(() => {
                 document.getElementById('step1').style.animation = "fadeOut 1.5s forwards";
                 setTimeout(() => {
@@ -145,7 +142,6 @@
                 }, 1500);
             }, 12000);
  
-            // Floating memories transition after 25s
             setTimeout(() => {
                 document.getElementById('step2').style.animation = "fadeOut 1.5s forwards";
                 setTimeout(() => {
@@ -156,7 +152,6 @@
                 }, 1500);
             }, 25000);
  
-            // Final button transition after 40s
             setTimeout(() => {
                 stopFloating();
                 clearInterval(starInterval);
@@ -219,4 +214,8 @@
                 heart.style.setProperty('--ty', (Math.random() - 0.5) * 1200 + 'px');
             }
             document.body.appendChild(heart);
-            setTimeout(() => heart.remo
+            setTimeout(() => heart.remove(), type === 'bg-heart' ? 7000 : 2000);
+        }
+    </script>
+</body>
+</html>
